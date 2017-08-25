@@ -1,0 +1,19 @@
+{
+  "name": "clockwidget",
+  "version": "0.0.1",
+  "description": "Clock widget as webcomponent",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
+  },
+  "keywords": [
+    "webcomponents",
+    "clock"
+  ],
+  "author": "inhuman.en@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
