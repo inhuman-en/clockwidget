@@ -1,0 +1,50 @@
+<!-- can't extract tpl in external file -->
+<!-- <link rel="import" href="clock.template.html"> -->
+<template id="clockTpl">
+    <style>
+        :host svg {
+            height: 100%;
+            width: 100%;
+        }
+
+        :host circle {
+            stroke: #000;
+            stroke-width: 5px;
+            fill: #fff;
+        }
+
+        :host .arrows line {
+            stroke: #000;
+            stroke-width: 5px;
+        }
+
+        :host .marks line {
+            stroke: #000;
+            stroke-width: 5px;
+        }
+    </style>
+    <svg>
+        <circle cx="150" cy="150" r="140" class="pane" />
+        <g class="marks">
+            <line x1="150" y1="35" x2="150" y2="20" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(30 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(60 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(90 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(120 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(150 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(180 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(210 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(240 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(270 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(300 150 150)" />
+            <line x1="150" y1="35" x2="150" y2="20" transform="rotate(330 150 150)" />
+            <!-- marks will reside here -->
+        </g>
+        <g class="arrows">
+            <line class="hour-arrow" x1="150" y1="150" x2="150" y2="50" />
+            <line class="minute-arrow" x1="150" y1="150" x2="150" y2="20" />
+            <line class="second-arrow" x1="150" y1="150" x2="150" y2="20" />
+        </g>
+    </svg>   
+</template>
+<script src="clock.element.js"></script>

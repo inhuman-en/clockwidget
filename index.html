@@ -6,11 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Clock demo</title>
     <script src="node_modules/webcomponentsjs/lite.js" ></script>
-    <script>
-        console.log(typeof document.registerElement === "function");
-    </script>
+    <link rel="import" href="clock/clock.html">
 </head>
-<body>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+    }
 
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    x-clock {
+        width: 300px;
+        height: 300px;
+    }
+</style>
+<body>
+    <x-clock></x-clock>
 </body>
 </html>
