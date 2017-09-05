@@ -3,14 +3,23 @@
 
     class XClock extends HTMLElement {
 
-        get time () {
+        static get observedAttributes() {return ['time']; }
 
+        static get tickSpan () {
+            return 1000;
+        }
+
+        get time () {
+            return this.milliseconds;
         }
 
         set time (value) {
-            this.hours = value.getHours();
-            this.minutes = value.getMinutes();
-            this.seconds = value.getSeconds();
+            let valueAsDate = new Date(value);
+
+            this.milliseconds = value;
+            this.hours = valueAsDate.getHours();
+            this.minutes = valueAsDate.getMinutes();
+            this.seconds = valueAsDate.getSeconds();
         }
 
         constructor() {
@@ -25,7 +34,7 @@
         }
 
         _tick () {
-            this.time = new Date();
+            this.time = this.milliseconds + XClock.tickSpan;
 
             let secondRotation = 6*this.seconds;
             let minuteRotation = 6*this.minutes;
@@ -47,13 +56,28 @@
                 second: this.shadowRoot.querySelector(".second-arrow")
             };
 
+            this.time = Date.now();
+
             this._tick();
-            this.timerId = setInterval(this._tick.bind(this), 1000);
+            this.timerId = setInterval(this._tick.bind(this), XClock.tickSpan);
         }
     
         disconnectedCallback() {
             clearInterval(this.timerId);
             console.log("disconnected!");
+        }
+
+        attributeChangedCallback (name, oldValue, newValue) {
+            if (name = "time") {
+                let newTime = +newValue
+
+                if (isNaN(newTime)) {
+                    throw new Error("time should be a numeric value");
+                } else {
+                    this.time = newTime;
+                    this._tick();
+                }
+            }
         }
     }
 
