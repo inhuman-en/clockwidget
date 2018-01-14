@@ -44,6 +44,13 @@
             <line class="minute-arrow" x1="150" y1="150" x2="150" y2="30" />
             <line class="second-arrow" x1="150" y1="150" x2="150" y2="30" />
         </g>
-    </svg>   
+    </svg>
 </template>
 <script src="clock.element.js"></script>
+<script>
+    (function () {
+        //todo: still it is a bad way to point at the template
+        XClock.tpl = document.currentScript.ownerDocument.querySelector('#clockTpl');
+        window.customElements.define('x-clock', XClock);
+    })();
+</script>
