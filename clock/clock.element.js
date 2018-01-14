@@ -35,9 +35,7 @@ class XClock extends HTMLElement {
         root.appendChild(tplHtml);
     }
 
-    _tick() {
-        this.time = this.milliseconds + XClock.tickSpan;
-
+    _updateDOM() {
         let secondRotation = 6 * this.seconds;
         let minuteRotation = 6 * this.minutes;
         let hourRotation = 360 / 12 * this._24To12(this.hours);
@@ -54,6 +52,10 @@ class XClock extends HTMLElement {
             'transform',
             `rotate(${hourRotation} 150 150)`
         );
+    }
+
+    _tick() {
+        this.time = this.milliseconds + XClock.tickSpan;
 
         this._fireEvent('tick');
     }
@@ -67,6 +69,26 @@ class XClock extends HTMLElement {
         this.dispatchEvent(evt);
     }
 
+    start() {
+        if (this._started) {
+            return;
+        }
+
+        this.time = this.time !== undefined ? this.time : Date.now();
+
+        this._started = true;
+        this._tick();
+        this.timerId = setInterval(this._tick.bind(this), XClock.tickSpan);
+    }
+
+    stop() {
+        if (this._started) {
+            this._started = false;
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
+    }
+
     connectedCallback() {
         this._appendTpl();
 
@@ -76,15 +98,14 @@ class XClock extends HTMLElement {
             second: this.shadowRoot.querySelector('.second-arrow')
         };
 
-        this.time = this.time !== undefined ? this.time : Date.now();
+        this.addEventListener('tick', this._updateDOM, this);
 
-        this._tick();
-        this.timerId = setInterval(this._tick.bind(this), XClock.tickSpan);
+        this.start();
     }
 
     disconnectedCallback() {
-        clearInterval(this.timerId);
-        console.log('disconnected!');
+        this.removeEventListener('tick', this._updateDOM);
+        this.stop();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
