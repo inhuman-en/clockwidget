@@ -21,27 +21,53 @@ describe('clock tests', () => {
         expect(wrap).toThrow();
     });
 
-    it('start should launch the clock', () => {
-        sut.start();
-        expect(sut.timerId).toEqual(jasmine.any(Number));
-    });
+    describe('starting clock', () => {
+        it('start should launch the clock', () => {
+            sut.start();
+            expect(sut.timerId).toEqual(jasmine.any(Number));
+        });
 
-    it('start should not launch the clock when it has been already started', () => {
-        sut.start();
+        it('start should not launch the clock when it has been already started', () => {
+            sut.start();
 
-        let { timerId } = sut;
+            let { timerId } = sut;
 
-        sut.start();
-        expect(sut.timerId).toEqual(timerId);
+            sut.start();
+            expect(sut.timerId).toEqual(timerId);
+        });
+
+        it('start should set the time property to current time if it is not defined', () => {
+            sut.start();
+
+            //hmmm.....
+            expect(sut.time).toBeCloseTo(Date.now());
+        });
     });
 
     describe('stopping clock', () => {
         beforeEach(() => sut.start());
 
         it('stop should stop the clock', () => {
-    
             sut.stop();
             expect(sut.timerId).toBeNull();
+        });
+    });
+
+    describe('ticks', () => {
+        beforeEach(() => {
+            jasmine.clock().install();
+        });
+
+        afterEach(() => {
+            jasmine.clock().uninstall();
+        });
+
+        it('should change the time property value accordingly to the timespan passed', () => {
+            sut.time = 40000;
+            sut.start();
+
+            jasmine.clock().tick(1000);
+            expect(sut.time).toEqual(41000);
         });
     });
 });

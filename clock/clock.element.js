@@ -74,11 +74,11 @@ class XClock extends HTMLElement {
             return;
         }
 
-        this.time = this.time !== undefined ? this.time : Date.now();
-
         this._started = true;
-        this._tick();
+        this.time = this.time !== undefined ? this.time : Date.now();
         this.timerId = setInterval(this._tick.bind(this), XClock.tickSpan);
+
+        this._fireEvent('tick');
     }
 
     stop() {
