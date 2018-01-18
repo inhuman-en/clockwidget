@@ -22,6 +22,8 @@ describe('clock tests', () => {
     });
 
     describe('starting clock', () => {
+        afterEach(() => sut.stop());
+
         it('start should launch the clock', () => {
             sut.start();
             expect(sut.timerId).toEqual(jasmine.any(Number));

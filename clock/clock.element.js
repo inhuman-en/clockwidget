@@ -78,6 +78,7 @@ class XClock extends HTMLElement {
         this.time = this.time !== undefined ? this.time : Date.now();
         this.timerId = setInterval(this._tick.bind(this), XClock.tickSpan);
 
+        //update the dom right after start so we don't need to wait one tick
         this._fireEvent('tick');
     }
 
